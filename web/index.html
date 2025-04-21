@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CatCat - App mobile</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <main class="content">
+        <header>
+          <h1>🐱 CatCat</h1>
+          <p>Défilez à l’infini des photos de chats aléatoires !</p>
+          <a
+            class="download-btn"
+            href="https://github.com/JUC0AG0G0/CatCat/releases/latest/download/app-release.apk"
+            download
+          >
+            📲 Télécharger l’application
+          </a>
+        </header>
+
+        <section class="mockup">
+          <div class="slider-container">
+            <div class="slider-track" id="slider-track">
+              <!-- Les images seront injectées ici dynamiquement -->
+            </div>
+          </div>
+
+          <p>Faites défiler, admirez, partagez 🖤</p>
+        </section>
+      </main>
+
+      <footer>
+        <div class="social-icons">
+          <a
+            href="https://www.linkedin.com/in/jules-corneille/"
+            target="_blank"
+            title="LinkedIn"
+          >
+            <img
+              src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg"
+              alt="LinkedIn"
+            />
+          </a>
+          <a
+            href="https://www.instagram.com/jules.corneille/"
+            target="_blank"
+            title="Instagram"
+          >
+            <img
+              src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg"
+              alt="Instagram"
+            />
+          </a>
+          <a href="https://github.com/JUC0AG0G0" target="_blank" title="GitHub">
+            <img
+              src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg"
+              alt="GitHub"
+            />
+          </a>
+          <a href="mailto:jules.corneill3@gmail.com" title="Email">
+            <img
+              src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/gmail.svg"
+              alt="Email"
+            />
+          </a>
+        </div>
+        <p>© 2025 Jules Corneille. Tous droits réservés.</p>
+      </footer>
+    </div>
+    <script>
+      const sliderTrack = document.getElementById("slider-track");
+
+      async function loadNewCatImage() {
+        try {
+          const res = await fetch("https://api.thecatapi.com/v1/images/search");
+          const data = await res.json();
+          if (data[0]?.url) {
+            const slide = document.createElement("div");
+            slide.className = "slider-slide";
+
+            const img = document.createElement("img");
+            img.src = data[0].url;
+            img.alt = "Chat random";
+
+            slide.appendChild(img);
+            sliderTrack.appendChild(slide);
+
+            sliderTrack.parentElement.scrollTop = sliderTrack.scrollHeight;
+          }
+        } catch (error) {
+          console.error("Erreur lors du chargement de l'image :", error);
+        }
+      }
+
+      loadNewCatImage();
+
+      setInterval(loadNewCatImage, 3000);
+    </script>
+  </body>
+</html>
