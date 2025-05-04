@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Partager un chat - CatCat</title>
+
+    <meta property="og:title" content="Regarde cette photo de chat 🐱" />
+    <meta property="og:description" content="Partagée depuis l'app CatCat." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://catcat.julescorneille.fr/" />
+    <meta name="twitter:card" content="summary" />
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #222631;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      img {
+        max-width: 90%;
+        max-height: 90%;
+        object-fit: contain;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get('id');
+
+      // URL de base pour les images
+      const baseUrl = 'https://cdn2.thecatapi.com/images/';
+
+      if (!id) {
+        // Si pas de paramètre 'id' -> redirige vers la page principale
+        window.location.href = '/';
+      } else {
+        const imgUrl = baseUrl + id;
+
+        // Crée une image
+        const img = new Image();
+        img.src = imgUrl;
+        img.alt = "Image de chat";
+
+        // Si l'image ne charge pas, redirige vers la page principale
+        img.onerror = function() {
+          window.location.href = '/';
+        };
+
+        // Quand l'image est chargée, l'ajouter au body
+        img.onload = function() {
+          document.body.appendChild(img);
+        };
+      }
+    </script>
+  </body>
+</html>
